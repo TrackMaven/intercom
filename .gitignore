@@ -1,0 +1,13 @@
+*.pyc
+*.pyo
+*~
+.build
+.DS_Store
+.env
+.vfenv
+.venv
+.Python
+*.sublime-*
+*.sqlite3*
+*.build
+.ropeproject

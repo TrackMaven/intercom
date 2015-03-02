@@ -1,0 +1,2 @@
+class IntercomError(Exception):
+    pass
