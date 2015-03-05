@@ -1,5 +1,6 @@
 import requests
 import os
+import json
 from . import IntercomError
 
 
@@ -26,14 +27,19 @@ class IntercomAPI(object):
         app_id = os.environ.get('INTERCOM_APP_ID')
 
     @classmethod
-    def request(cls, method, endpoint, params):
+    def request(cls, method, endpoint, params=None, data=None):
         url = '{}/{}'.format(cls.BASE_URL, endpoint)
         try:
-            response = requests.request(method, url, params=params)
+            response = requests.request(
+                method, url, params=params, data=json.dumps(data),
+                auth=(cls.app_id, cls.api_key),
+                headers={'Accept': 'application/json',
+                         'Content-Type': 'application/json'})
             try:
                 response.raise_for_status()
-                return response
+                return response.json()
             except requests.exceptions.HTTPError as e:
+                print response.content
                 raise IntercomHTTPError(e)
         except (requests.exceptions.ConnectionError,
                 requests.exceptions.Timeout) as e:
