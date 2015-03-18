@@ -114,12 +114,14 @@ def test_delete_user(mock_request, mock_params):
 
 @mock.patch('intercom.client.IntercomAPI.request')
 def test_save(mock_request):
+    mock_request.return_value = {'name': 'Test re init'}
     user = User(name='Bender Rodriguez', color='saffron', email=None)
     user.save()
     mock_request.assert_called_once_with(
         'POST', 'users', data={'name': 'Bender Rodriguez',
                                'update_last_request_at': False,
                                'new_session': False})
+    assert user.name == 'Test re init'
 
 
 @mock.patch('intercom.client.IntercomAPI.request')

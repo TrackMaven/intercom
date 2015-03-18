@@ -35,7 +35,7 @@ class User(object):
 
     @classmethod
     def create(cls, user_id=None, email=None, new_session=False,
-                    update_last_request_at=False, **kwargs):
+               update_last_request_at=False, **kwargs):
         data = cls._get_user_params(user_id, email)
         data['update_last_request_at'] = update_last_request_at
         data['new_session'] = new_session
@@ -88,7 +88,8 @@ class User(object):
             if (hasattr(self, attribute) and
                     getattr(self, attribute) is not None):
                 data[attribute] = getattr(self, attribute)
-        IntercomAPI.request('POST', self.endpoint, data=data)
+        new_data = IntercomAPI.request('POST', self.endpoint, data=data)
+        self.__init__(**new_data)
 
     def delete(self):
         IntercomAPI.request('DELETE', self.endpoint,
