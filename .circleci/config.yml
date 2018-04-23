@@ -30,8 +30,8 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            pip install tox tox-pyenv
-            pyenv local 2.7.11
+            pip install --process-dependency-links -e .
+            pip install -r requirements-dev.txt
 
       - save_cache:
           paths:
