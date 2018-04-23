@@ -22,7 +22,7 @@ jobs:
       - run:
           name: run tests
           command: |
-              sudo make tests
+              INTERCOM_API_TOKEN=test_token sudo make test
       - store_artifacts:
           path: test-reports
           destination: test-reports

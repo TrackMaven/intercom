@@ -8,5 +8,5 @@ setup:
 	pip install --process-dependency-links -e .
 	pip install -r requirements-dev.txt
 
-tests:
+test:
 	py.test

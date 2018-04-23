@@ -11,7 +11,7 @@ class IntercomAPITestCase(unittest.TestCase):
     def setUp(self):
         self.headers = {
             'Accept': 'application/json',
-            'Authorization': 'Bearer None',
+            'Authorization': 'Bearer test_token',
             'Content-Type': 'application/json',
         }
 
