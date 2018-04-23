@@ -1,18 +1,34 @@
-from setuptools import setup
+from setuptools import find_packages, setup
+import os
 
-
-requires = [
-    'requests==2.5.3',
+# Package meta-data.
+NAME = 'intercom'
+DESCRIPTION = 'A Python library fro the Intercom API.'
+URL = 'https://github.com/TrackMaven/intercom'
+EMAIL = 'engineering@trackmaven.com'
+AUTHOR = 'TrackMaven Engineering'
+VERSION = None
+REQUIRED = [
+    'requests==2.18.4',
 ]
 
+here = os.path.abspath(os.path.dirname(__file__))
+about = {}
+if not VERSION:
+    with open(os.path.join(here, NAME, '__version__.py')) as f:
+        exec(f.read(), about)
+else:
+    about['__version__'] = VERSION
 
 setup(
-    name='intercom',
-    author="TrackMaven Engineering",
-    author_email="engineering@trackmaven.com",
-    version='0.0.2',
-    description="",
-    url="https://github.com/TrackMaven/intercom",
-    install_requires=requires,
-    license="MIT",
+    name=NAME,
+    version=about['__version__'],
+    author=AUTHOR,
+    author_email=EMAIL,
+    description=DESCRIPTION,
+    include_package_data=True,
+    install_requires=REQUIRED,
+    license='MIT',
+    packages=find_packages(exclude=('tests',)),
+    url=URL,
 )

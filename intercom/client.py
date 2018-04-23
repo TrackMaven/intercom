@@ -20,26 +20,28 @@ class IntercomAPI(object):
 
     try:
         from django.conf import settings
-        api_key = settings.INTERCOM_API_KEY
-        app_id = settings.INTERCOM_APP_ID
-    except:
-        api_key = os.environ.get('INTERCOM_API_KEY')
-        app_id = os.environ.get('INTERCOM_APP_ID')
+        api_token = settings.INTERCOM_API_TOKEN
+    except Exception:
+        api_token = os.environ.get('INTERCOM_API_TOKEN')
 
     @classmethod
     def request(cls, method, endpoint, params=None, data=None):
         url = '{}/{}'.format(cls.BASE_URL, endpoint)
         try:
             response = requests.request(
-                method, url, params=params, data=json.dumps(data),
-                auth=(cls.app_id, cls.api_key),
-                headers={'Accept': 'application/json',
-                         'Content-Type': 'application/json'})
+                method,
+                url,
+                params=params,
+                data=json.dumps(data),
+                headers={
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer {}'.format(cls.api_token),
+                })
             try:
                 response.raise_for_status()
                 return response.json()
             except requests.exceptions.HTTPError as e:
-                print response.content
                 raise IntercomHTTPError(e)
         except (requests.exceptions.ConnectionError,
                 requests.exceptions.Timeout) as e:
