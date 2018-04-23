@@ -2,16 +2,18 @@ import pytest
 import mock
 import requests
 import unittest
-from intercom.client import (IntercomAPI, IntercomHTTPError,
-                             IntercomConnectionError)
+from intercom.client import (
+    IntercomAPI, IntercomHTTPError, IntercomConnectionError)
 
 
 class IntercomAPITestCase(unittest.TestCase):
 
     def setUp(self):
-        self.headers = {'Accept': 'application/json',
-                        'Content-Type': 'application/json'}
-        self.auth = (None, None)
+        self.headers = {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer None',
+            'Content-Type': 'application/json',
+        }
 
     @mock.patch('intercom.client.requests.request')
     def test_request_success(self, mock_request):
@@ -20,10 +22,12 @@ class IntercomAPITestCase(unittest.TestCase):
         mock_request.return_value = mock_response
         IntercomAPI.request('GET', 'users', {'user_id': '8675309'})
         mock_request.assert_called_once_with(
-            'GET', 'https://api.intercom.io/users',
+            'GET',
+            'https://api.intercom.io/users',
             params={'user_id': '8675309'},
-            headers=self.headers, auth=self.auth,
-            data='null')
+            data='null',
+            headers=self.headers,
+        )
         mock_request.raise_for_status.assert_called_once()
 
     @mock.patch('intercom.client.requests.request')
@@ -39,5 +43,5 @@ class IntercomAPITestCase(unittest.TestCase):
     def test_request_connection_error(self, mock_request):
         mock_request.side_effect = requests.exceptions.ConnectionError()
         with pytest.raises(IntercomConnectionError):
-            IntercomAPI.request('POST', 'users',
-                                {'email': 'cambam@askjeeves.com'})
+            IntercomAPI.request(
+                'POST', 'users', {'email': 'cambam@askjeeves.com'})
