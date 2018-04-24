@@ -22,7 +22,7 @@ class IntercomAPI(object):
         from django.conf import settings
         api_token = settings.INTERCOM_API_TOKEN
     except Exception:
-        api_token = os.environ.get('INTERCOM_API_TOKEN')
+        api_token = os.environ.get('INTERCOM_API_TOKEN', "test_token")
 
     @classmethod
     def request(cls, method, endpoint, params=None, data=None):
