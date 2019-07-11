@@ -1,11 +1,10 @@
 import pytest
-import unittest.mock as mock
 import requests
-import unittest
+from unittest import mock, TestCase
 from intercom.client import IntercomAPI, IntercomHTTPError, IntercomConnectionError
 
 
-class IntercomAPITestCase(unittest.TestCase):
+class IntercomAPITestCase(TestCase):
     def setUp(self):
         self.headers = {
             "Accept": "application/json",

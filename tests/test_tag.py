@@ -1,5 +1,6 @@
 import pytest
-import unittest.mock as mock
+from unittest import mock
+
 from intercom import User, Tag
 from intercom import IntercomError
 
