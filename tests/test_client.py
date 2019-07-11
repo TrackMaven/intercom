@@ -1,5 +1,5 @@
 import pytest
-import mock
+import unittest.mock as mock
 import requests
 import unittest
 from intercom.client import (
@@ -20,7 +20,8 @@ class IntercomAPITestCase(unittest.TestCase):
         mock_response = mock.Mock()
         mock_response.raise_for_status.return_value = None
         mock_request.return_value = mock_response
-        IntercomAPI.request('GET', 'users', {'user_id': '8675309'})
+        r = IntercomAPI.request('GET', 'users', {'user_id': '8675309'})
+        print(r)
         mock_request.assert_called_once_with(
             'GET',
             'https://api.intercom.io/users',
