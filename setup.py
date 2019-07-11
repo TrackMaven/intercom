@@ -9,7 +9,7 @@ EMAIL = 'engineering@trackmaven.com'
 AUTHOR = 'TrackMaven Engineering'
 VERSION = None
 REQUIRED = [
-    'requests==2.18.4',
+    'requests==2.22.0',
 ]
 
 here = os.path.abspath(os.path.dirname(__file__))

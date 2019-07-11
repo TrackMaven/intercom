@@ -5,7 +5,7 @@ clean:
 	rm -rf build/ dist/
 
 setup:
-	pip install --process-dependency-links -e .
+	pip install -e .
 	pip install -r requirements-dev.txt
 
 test:
