@@ -18,12 +18,11 @@ class IntercomAPITestCase(unittest.TestCase):
         mock_response = mock.Mock()
         mock_response.raise_for_status.return_value = None
         mock_request.return_value = mock_response
-        r = IntercomAPI.request("GET", "users", {"user_id": "8675309"})
-        print(r)
+        IntercomAPI.request("GET", "users", {"user_id": "8675309"})
         mock_request.assert_called_once_with(
             "GET", "https://api.intercom.io/users", params={"user_id": "8675309"}, data="null", headers=self.headers
         )
-        mock_request.raise_for_status.assert_called_once()
+        mock_response.raise_for_status.assert_called_once()
 
     @mock.patch("intercom.client.requests.request")
     def test_request_http_error(self, mock_request):

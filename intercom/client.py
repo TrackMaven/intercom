@@ -43,7 +43,6 @@ class IntercomAPI(object):
             )
             try:
                 response.raise_for_status()
-                print("HERE")
                 return response.json()
             except requests.exceptions.HTTPError as e:
                 raise IntercomHTTPError(e)
